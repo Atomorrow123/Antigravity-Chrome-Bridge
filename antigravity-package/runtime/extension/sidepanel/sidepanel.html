@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Antigravity 操控台 | Chrome Bridge</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="panel-shell">
+    <header class="panel-header">
+      <div class="brand">
+        <img src="../icons/icon-48.png" alt="" width="26" height="26" class="brand-icon">
+        <h1>Antigravity 操控台</h1>
+      </div>
+      <div id="sp-status-pill" class="status-pill" data-status="connecting" role="status" aria-live="polite">
+        <span class="status-indicator" aria-hidden="true"></span>
+        <span id="sp-status-text">连接中</span>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <section class="platter" aria-labelledby="tab-info-heading">
+        <div class="card-header">
+          <h2 id="tab-info-heading">受控标签页</h2>
+          <button type="button" id="sp-btn-reconnect" class="btn-ghost">重连服务</button>
+        </div>
+        <div class="tab-card-box">
+          <p id="sp-tab-title" class="tab-title">正在读取当前标签页...</p>
+          <p id="sp-tab-url" class="tab-url">about:blank</p>
+        </div>
+        <div class="quick-bar">
+          <button type="button" id="sp-btn-refresh" class="btn btn-primary">
+            <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 2.75H3.75a1 1 0 0 0-1 1V5M11 2.75h1.25a1 1 0 0 1 1 1V5M2.75 11v1.25a1 1 0 0 0 1 1H5M13.25 11v1.25a1 1 0 0 1-1 1H11"/>
+              <circle cx="8" cy="8" r="2"/>
+            </svg>
+            <span>扫描快照</span>
+          </button>
+          <button type="button" id="sp-btn-highlight" class="btn btn-secondary">
+            <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2.5" y="3.5" width="11" height="9" rx="2"/>
+              <path d="M5.5 6.75h5M5.5 9.25h3"/>
+            </svg>
+            <span>高亮元素</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="platter" aria-labelledby="manual-cmd-heading">
+        <div class="card-header">
+          <h2 id="manual-cmd-heading">指令调试器</h2>
+        </div>
+        <form id="sp-cmd-form" class="cmd-form" action="#" method="post" novalidate>
+          <fieldset class="segmented-fieldset">
+            <legend class="visually-hidden">选择操控动作类型</legend>
+            <div class="segmented-control">
+              <input type="radio" id="cmd-click" name="command" value="click" class="visually-hidden" checked>
+              <label for="cmd-click" class="segment-label">点击</label>
+
+              <input type="radio" id="cmd-fill" name="command" value="fill" class="visually-hidden">
+              <label for="cmd-fill" class="segment-label">输入</label>
+
+              <input type="radio" id="cmd-open" name="command" value="open_tab" class="visually-hidden">
+              <label for="cmd-open" class="segment-label">跳转</label>
+
+              <input type="radio" id="cmd-eval" name="command" value="eval_js" class="visually-hidden">
+              <label for="cmd-eval" class="segment-label">脚本</label>
+            </div>
+          </fieldset>
+
+          <div class="form-field">
+            <label for="sp-target-input" id="sp-target-label">目标元素 (ref 编号 / CSS 选择器 / 文本)</label>
+            <input
+              type="text"
+              id="sp-target-input"
+              name="target"
+              placeholder="例如：1 或 #search-input 或 登录"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+            >
+          </div>
+
+          <div class="form-field" id="sp-value-group" hidden>
+            <label for="sp-value-input">输入文本内容</label>
+            <input
+              type="text"
+              id="sp-value-input"
+              name="value"
+              placeholder="输入要填入表单的文字..."
+            >
+          </div>
+
+          <button type="submit" id="sp-btn-exec" class="btn btn-primary btn-full">执行指令</button>
+        </form>
+
+        <details class="result-details" open>
+          <summary>
+            <span>检查器返回输出</span>
+            <svg class="disclosure-chevron" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 4.5L9.5 8 6 11.5"/>
+            </svg>
+          </summary>
+          <pre tabindex="0"><code id="sp-result-code">// 点击「扫描快照」或执行指令查看输出</code></pre>
+        </details>
+      </section>
+
+      <section class="platter" aria-labelledby="elements-heading">
+        <div class="card-header">
+          <h2 id="elements-heading">可交互节点</h2>
+          <span id="sp-el-count" class="count-badge">0</span>
+        </div>
+        <div class="filter-bar">
+          <label for="sp-el-filter" class="visually-hidden">筛选页面节点</label>
+          <input
+            type="search"
+            id="sp-el-filter"
+            name="filter"
+            placeholder="搜索标签、文本或 #ref 编号..."
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          >
+        </div>
+        <ul id="sp-el-list" class="el-list" role="list">
+          <li class="empty-hint">点击上方「扫描快照」列出当前页面的按钮、输入框与链接</li>
+        </ul>
+      </section>
+
+      <section class="platter" aria-labelledby="logs-heading">
+        <div class="card-header">
+          <h2 id="logs-heading">实时指令流</h2>
+          <button type="button" id="sp-btn-clear" class="btn-ghost">清空</button>
+        </div>
+        <ul id="sp-log-list" class="log-list" role="list">
+          <li class="empty-hint">等待 Antigravity 下发操控指令...</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

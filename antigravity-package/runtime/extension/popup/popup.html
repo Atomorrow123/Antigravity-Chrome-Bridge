@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Antigravity Bridge</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand-row">
+        <img src="../icons/icon-48.png" alt="" width="32" height="32" class="brand-icon">
+        <div class="brand-copy">
+          <h1>Antigravity</h1>
+          <p class="subtitle">Chrome 控制中心</p>
+        </div>
+      </div>
+      <div id="status-pill" class="status-pill" data-status="connecting" role="status" aria-live="polite">
+        <span class="status-indicator" aria-hidden="true"></span>
+        <span id="status-text">连接中</span>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section class="bento-grid" aria-label="快捷控制">
+        <button type="button" id="btn-snapshot" class="bento-tile">
+          <span class="tile-icon tile-icon-blue" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6.5 3.5H5a1.5 1.5 0 0 0-1.5 1.5v1.5M13.5 3.5H15A1.5 1.5 0 0 1 16.5 5v1.5M3.5 13.5V15A1.5 1.5 0 0 0 5 16.5h1.5M16.5 13.5V15a1.5 1.5 0 0 1-1.5 1.5h-1.5"/>
+              <circle cx="10" cy="10" r="2.75"/>
+            </svg>
+          </span>
+          <span class="tile-body">
+            <span class="tile-title">捕获快照</span>
+            <span class="tile-meta" id="snapshot-meta">扫描交互节点</span>
+          </span>
+        </button>
+
+        <button type="button" id="btn-highlight" class="bento-tile">
+          <span class="tile-icon tile-icon-indigo" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3.5" y="4.5" width="13" height="11" rx="2.5"/>
+              <path d="M7 8.5h6M7 11.5h3.5"/>
+            </svg>
+          </span>
+          <span class="tile-body">
+            <span class="tile-title">高亮元素</span>
+            <span class="tile-meta" id="highlight-meta">标记页面控件</span>
+          </span>
+        </button>
+
+        <button type="button" id="btn-sidepanel" class="bento-wide">
+          <span class="wide-left">
+            <span class="tile-icon tile-icon-solid" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3.5" width="14" height="13" rx="2.5"/>
+                <path d="M11.5 3.5v13"/>
+              </svg>
+            </span>
+            <span class="tile-body">
+              <span class="tile-title">打开侧边操控台</span>
+              <span class="tile-meta">实时检查元素、调试指令与查看日志</span>
+            </span>
+          </span>
+          <svg class="chevron-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 3.5L10.5 8 6 12.5"/>
+          </svg>
+        </button>
+      </section>
+
+      <section class="platter" aria-labelledby="conn-heading">
+        <form id="reconnect-form" action="#" method="post" novalidate>
+          <div class="field-header">
+            <label for="ws-url-input" id="conn-heading">本地桥接端点</label>
+            <span class="port-chip">Port 18765</span>
+          </div>
+          <div class="input-row">
+            <input
+              type="url"
+              id="ws-url-input"
+              name="wsUrl"
+              value="ws://127.0.0.1:18765/ws"
+              placeholder="ws://127.0.0.1:18765/ws"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              required
+            >
+            <button type="submit" id="btn-reconnect" class="btn-capsule">重连</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="platter platter-logs" aria-labelledby="logs-heading">
+        <div class="section-header">
+          <h2 id="logs-heading">最近活动</h2>
+          <button type="button" id="btn-clear-logs" class="btn-ghost">清空</button>
+        </div>
+        <ul id="log-list" class="log-list" role="list">
+          <li class="log-empty">暂无指令执行记录</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span id="active-tab-label" class="footer-status" aria-live="polite">就绪</span>
+      <span class="footer-version">v1.0 · MCP Ready</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

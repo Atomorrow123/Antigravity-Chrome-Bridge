@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "antigravity-chrome-bridge": {
+      "command": "node",
+      "args": [
+        "{{MCP_STDIO_SCRIPT_PATH}}"
+      ]
+    }
+  }
+}

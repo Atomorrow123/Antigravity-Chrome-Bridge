@@ -1,0 +1,21 @@
+{
+  "name": "antigravity-chrome-bridge",
+  "displayName": "Antigravity Chrome Bridge",
+  "version": "1.0.0",
+  "description": "Control the local Chrome browser via the Antigravity Chrome Bridge MV3 extension, local WebSocket server, CLI, and MCP tools.",
+  "author": {
+    "name": "齐天大圣123 & Antigravity Agent",
+    "url": "https://github.com/Atomorrow123"
+  },
+  "homepage": "https://github.com/Atomorrow123/Antigravity-Chrome-Bridge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Atomorrow123/Antigravity-Chrome-Bridge"
+  },
+  "logo": "assets/icon-128.png",
+  "suggestedPrompts": [
+    "查看当前 Chrome 浏览器打开了哪些标签页",
+    "在 Chrome 中打开指定网页并抓取页面交互快照",
+    "帮我在当前 Chrome 页面自动填写表单并点击提交"
+  ]
+}
